@@ -39,22 +39,24 @@ public class UserController {
     @PostMapping("/login")
     ResponseEntity<UserResponse> loginUser(@RequestBody LoginUserRequest request) {
         UserEntity savedUser = userService.loginUser(request.getUsername(), request.getPassword());
-
         return ResponseEntity.ok(modelMapper.map(savedUser, UserResponse.class));
     }
 
     @ExceptionHandler({
-            UserService.UserNotFoundException.class
+            UserService.UserNotFoundException.class,
+            UserService.InvalidCredentialsException.class
     })
-    ResponseEntity<ErrorsResponse> handleUserNotFoundException(Exception ex) {
+    ResponseEntity<ErrorsResponse> handleUserExceptions(Exception ex) {
         String message;
         HttpStatus status;
 
         if (ex instanceof UserService.UserNotFoundException) {
             message = ex.getMessage();
             status = HttpStatus.NOT_FOUND;
+        } else if (ex instanceof UserService.InvalidCredentialsException) {
+            message = ex.getMessage();
+            status = HttpStatus.UNAUTHORIZED;
         } else {
-
             message = "Something went wrong";
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
@@ -63,10 +65,9 @@ public class UserController {
                 .message(message)
                 .build();
 
-
-
         return ResponseEntity.status(status).body(response);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<UserEntity> getUserById(@PathVariable Long id) {

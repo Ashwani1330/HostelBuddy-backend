@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Getter
@@ -33,14 +32,4 @@ public class UserEntity {
     @Column(nullable = true)
     @Nullable
     private String image;
-
-    public void setPassword(String rawPassword) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        this.password = passwordEncoder.encode(rawPassword);
-    }
-
-    // other user-related fields
-
-    // getters and setters
-
 }
