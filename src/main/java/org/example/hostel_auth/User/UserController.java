@@ -13,15 +13,17 @@ import java.net.URI;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
     private final ModelMapper modelMapper;
 
-    public UserController(UserService userService, ModelMapper modelMapper) {
+    public UserController(UserService userService, UserRepository userRepository, ModelMapper modelMapper) {
         this.userService = userService;
+        this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -66,13 +68,11 @@ public class UserController {
         return ResponseEntity.status(status).body(response);
     }
 
-}
-
-/*    @GetMapping("/user/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<UserEntity> getUserById(@PathVariable Long id) {
         Optional<UserEntity> user = userRepository.findById(id);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Add more endpoints for other functionality
-}*/
+}

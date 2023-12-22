@@ -18,11 +18,11 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         auth ->
-                                auth.requestMatchers("/*").permitAll()
-                                        .requestMatchers("/users", "/users/login").permitAll()
-                                        .anyRequest().authenticated())
+                                auth  //.requestMatchers("/*").permitAll()
+                                        .requestMatchers("/users", "/users/login", "/users/{id}").permitAll()
+                                        .anyRequest().authenticated());
                 // .exceptionHandling(e -> e.authenticationEntryPoint())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                // .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
     }
