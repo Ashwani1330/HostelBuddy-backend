@@ -1,5 +1,6 @@
 package org.example.hostel_auth.User;
 
+import org.example.hostel_auth.Security.JWTService;
 import org.example.hostel_auth.User.dtos.CreateUserRequest;
 import org.example.hostel_auth.User.dtos.LoginUserRequest;
 import org.example.hostel_auth.User.dtos.UserResponse;
@@ -18,28 +19,39 @@ public class UserController {
 
     private final UserService userService;
     private final UserRepository userRepository;
-
     private final ModelMapper modelMapper;
+    private final JWTService jwtService;
 
-    public UserController(UserService userService, UserRepository userRepository, ModelMapper modelMapper) {
+
+    public UserController(UserService userService, UserRepository userRepository, ModelMapper modelMapper, JWTService jwtService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("")
     ResponseEntity<UserResponse> signupUser(@RequestBody CreateUserRequest request) {
         UserEntity savedUser = userService.createUser(request);
         URI savedUserURI = URI.create("/users/" + savedUser.getId());
+        var userResponse = modelMapper.map(savedUser, UserResponse.class);
+        userResponse.setToken(
+                jwtService.createJWT(userResponse.getId())
+        );
 
         return ResponseEntity.created(savedUserURI)
-                .body(modelMapper.map(savedUserURI, UserResponse.class));
+                .body(userResponse);
     }
 
     @PostMapping("/login")
     ResponseEntity<UserResponse> loginUser(@RequestBody LoginUserRequest request) {
         UserEntity savedUser = userService.loginUser(request.getUsername(), request.getPassword());
-        return ResponseEntity.ok(modelMapper.map(savedUser, UserResponse.class));
+        var userResponse = modelMapper.map(savedUser, UserResponse.class);
+        userResponse.setToken(
+                jwtService.createJWT(userResponse.getId())
+        );
+
+        return ResponseEntity.ok(userResponse);
     }
 
     @ExceptionHandler({

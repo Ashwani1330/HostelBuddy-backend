@@ -15,8 +15,8 @@ public class JpaTestConfig {
     public DataSource dataSource() {
         var dataSource = new DriverManagerDataSource();
 
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/hostel_buddy");
+        dataSource.setDriverClassName("org.h2.Driver");
+        dataSource.setUrl("jdbc:h2:tcp://localhost:9092/default");
 
         return dataSource;
     }
