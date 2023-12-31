@@ -28,6 +28,7 @@ public class JWTAuthenticationManager implements AuthenticationManager {
             return jwtAuthentication;
         }
 
-        return null;
+        throw new IllegalAccessError("Cannot authenticate with non-JWTAuthentication");
+
     }
 }

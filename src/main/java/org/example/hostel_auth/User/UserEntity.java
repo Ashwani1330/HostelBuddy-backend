@@ -67,6 +67,7 @@ public class UserEntity implements UserDetails {
         return false;
     }
 
+    @NonNull
     @Override
     public String getPassword() {
         return password;
