@@ -19,4 +19,8 @@ public class HostelAuthApplication {
 		return new ModelMapper();
 	}
 
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }

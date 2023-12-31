@@ -10,7 +10,7 @@ import java.util.Date;
 public class JWTService {
     // TODO: Move the key to a separate .properties file (not in git)
     private static final String JWT_KEY = "afljaldfj232aifdal1239ewrw782oznz8cj02nu90bsbkk232jah";
-    private Algorithm algorithm  = Algorithm.HMAC256(JWT_KEY);
+    private final Algorithm algorithm  = Algorithm.HMAC256(JWT_KEY);
 
     public String createJWT(Long userId) {
         return JWT.create()
@@ -20,7 +20,7 @@ public class JWTService {
                 .sign(algorithm);
     }
 
-    public long retrieveUserId(String jwtString) {
+    public Long retrieveUserId(String jwtString) {
         var decodedJWT = JWT.decode(jwtString);
         var userId = Long.valueOf(decodedJWT.getSubject());
         return userId;
