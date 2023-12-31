@@ -2,16 +2,11 @@ package org.example.hostel_auth.User;
 
 import org.example.hostel_auth.User.dtos.CreateUserRequest;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-
 @Service
-public class UserService implements UserDetailsService {
+public class UserService { // implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
@@ -25,7 +20,7 @@ public class UserService implements UserDetailsService {
     }
 
 
-    @Override
+/*    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
@@ -35,7 +30,7 @@ public class UserService implements UserDetailsService {
                 user.getPassword(),
                 new ArrayList<>()
         );
-    }
+    }*/
 
     public UserEntity getUser(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));

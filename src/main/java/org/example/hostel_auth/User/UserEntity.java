@@ -5,6 +5,8 @@ import lombok.*;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @Setter
@@ -16,7 +18,7 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private UUID Id;
 
     @Column(unique = true)
     private String username;

@@ -54,5 +54,4 @@ public class JWTAuthentication implements Authentication {
         return null;
     }
 
-
 }
