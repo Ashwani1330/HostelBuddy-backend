@@ -30,7 +30,7 @@ public class SecurityConfig {
                         auth ->
                                 auth  //.requestMatchers("/*").permitAll()
                                         .requestMatchers("/users", "/users/login").permitAll()
-                                        .requestMatchers(HttpMethod.GET, "/users/{id}").permitAll()
+                                        .requestMatchers( "/users/{id}").permitAll()
                                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthenticationFilter, AnonymousAuthenticationFilter.class);
         // .exceptionHandling(e -> e.authenticationEntryPoint())

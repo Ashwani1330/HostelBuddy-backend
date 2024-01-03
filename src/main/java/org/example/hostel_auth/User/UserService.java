@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {  // implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
@@ -25,6 +25,7 @@ public class UserService implements UserDetailsService {
     }
 
 
+/*
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = userRepository.findByUsername(username)
@@ -36,6 +37,7 @@ public class UserService implements UserDetailsService {
                 new ArrayList<>()
         );
     }
+*/
 
     public UserEntity getUser(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
