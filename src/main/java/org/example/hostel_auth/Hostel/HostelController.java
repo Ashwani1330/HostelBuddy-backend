@@ -1,8 +1,10 @@
 package org.example.hostel_auth.Hostel;
 
-import org.example.hostel_auth.User.UserEntity;
+import org.example.hostel_auth.Hostel.dtos.CreateHostelRequest;
+import org.example.hostel_auth.User.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -12,15 +14,30 @@ import java.util.UUID;
 @RequestMapping("/hostel")
 public class HostelController {
 
-    private final HostelRepository hostelRepository;
 
-    public HostelController(HostelRepository hostelRepository) {
+    private final HostelRepository hostelRepository;
+    private final HostelService hostelService;
+
+    @Autowired
+    public HostelController(HostelService hostelService, HostelRepository hostelRepository) {
+        this.hostelService = hostelService;
         this.hostelRepository = hostelRepository;
     }
 
-    @PostMapping("")
+
+ /*   @PostMapping("")
     String createHostel(@AuthenticationPrincipal UserEntity user) {
         return "Hostel details enter by user: " + user.getUsername();
+    }*/
+
+    @PostMapping("")
+    public ResponseEntity<HostelEntity> createHostel(@RequestBody CreateHostelRequest createHostelRequest) {
+        try {
+            HostelEntity createdHostel = hostelService.CreateHostelDetails(createHostelRequest);
+            return new ResponseEntity<>(createdHostel, HttpStatus.CREATED);
+        } catch (UserService.UserNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 

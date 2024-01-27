@@ -33,7 +33,7 @@ public class UserController {
     @PostMapping("")
     ResponseEntity<UserResponse> signupUser(@RequestBody CreateUserRequest request) {
         UserEntity savedUser = userService.createUser(request);
-        URI savedUserURI = URI.create("/users/" + savedUser.getId());
+        URI savedUserURI = URI.create("/users/" + savedUser.getUser_id());
         var userResponse = modelMapper.map(savedUser, UserResponse.class);
         userResponse.setToken(
                 jwtService.createJWT(userResponse.getId())

@@ -16,4 +16,6 @@ public class CreateHostelRequest {
     private String blockName;
     @NonNull
     private int roomNumber;
+    @NonNull
+    private String username;
 }

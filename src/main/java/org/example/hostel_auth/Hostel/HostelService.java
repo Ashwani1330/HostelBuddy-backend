@@ -23,16 +23,17 @@ public class HostelService {
         return hostelRepository.findByUsername(user).orElseThrow(() -> new UserService.UserNotFoundException());
     }*/
 
-    public HostelEntity CreateHostelDetails(CreateHostelRequest a, Long UserId) {
-        var user = userRepository.findById(UserId).orElseThrow(() -> new UserService.UserNotFoundException(UserId));
+    public HostelEntity CreateHostelDetails(CreateHostelRequest a) {
+        var user = userRepository.findByUsername(a.getUsername()).orElseThrow(() -> new UserService.UserNotFoundException(a.getUsername()));
 
         return hostelRepository.save(HostelEntity.builder()
                 .regNumber(a.getRegNumber())
                 .hostelType(a.getHostelType())
                 .blockName(a.getBlockName())
                 .roomNumber(a.getRoomNumber())
+                .username(user)
+                .userId(user)
                 .build()
         );
     }
-
 }

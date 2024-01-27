@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.example.hostel_auth.User.UserEntity;
 
-import java.util.UUID;
-
 @Entity
 @Builder
 @Getter
@@ -20,8 +18,9 @@ public class HostelEntity {
     @Column(nullable = false)
     private Long Id;
 
+
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false, columnDefinition = "BIGINT")
     private UserEntity userId;
 
     @ManyToOne
@@ -32,5 +31,4 @@ public class HostelEntity {
     private String hostelType;
     private String blockName;
     private int roomNumber;
-
 }
